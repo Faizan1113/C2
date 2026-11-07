@@ -14,7 +14,7 @@ library(shiny)
 RUPEE <- "\u20b9"   # the rupee sign, written as an escape so it never gets corrupted
 
 # ---- Gujarati labels for every input (also used in error messages) ---
-field_labels <- c(
+field_labels <- enc2utf8(c(
   perfume_kg    = "પરફ્યુમનું વજન (કિગ્રા)",
   perfume_price = "પરફ્યુમનો ભાવ પ્રતિ કિગ્રા (\u20b9)",
   dep_kg        = "DEP નું વજન (કિગ્રા)",
@@ -23,7 +23,7 @@ field_labels <- c(
   packet_kg     = "એક પેકેટનું વજન (કિગ્રા)",
   raw_price     = "કાચી અગરબત્તીનો ભાવ પ્રતિ કિગ્રા (\u20b9)",
   pack_charge   = "પેકિંગ અને લેબલિંગ ચાર્જ પ્રતિ પેકેટ (\u20b9)"
-)
+))
 
 # =====================================================================
 #  PART 1: CALCULATION LOGIC (no Shiny code here)
@@ -127,8 +127,8 @@ calculate_costs <- function(v) {
 # =====================================================================
 
 app_css <- "
-  body { font-family: 'Noto Sans Gujarati','Nirmala UI','Shruti','Lohit Gujarati',
-         'Segoe UI',Arial,sans-serif; background:#f1f8f2; color:#1b3a24; }
+  body { font-family: 'Noto Sans Gujarati','Nirmala UI','Shruti',sans-serif;
+         background:#f1f8f2; color:#1b3a24; }
   .app-wrap { max-width:560px; margin:0 auto; padding:12px 12px 40px 12px; }
   .app-header { background:#1b7a3d; color:#fff; border-radius:14px; padding:18px;
                 text-align:center; margin-bottom:14px; }
@@ -188,6 +188,8 @@ ui <- fluidPage(
   tags$head(
     tags$meta(charset = "UTF-8"),
     tags$meta(name = "viewport", content = "width=device-width, initial-scale=1"),
+    tags$link(rel = "preconnect", href = "https://fonts.googleapis.com"),
+    tags$link(rel = "preconnect", href = "https://fonts.gstatic.com", crossorigin = "anonymous"),
     tags$link(rel = "stylesheet",
               href = "https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700;800&display=swap"),
     tags$style(HTML(app_css))
